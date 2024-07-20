@@ -1,0 +1,38 @@
+### Transforming Features to Polynomial Features
+
+Before fitting a polynomial regression model, we need to transform the original features into polynomial features. This transformation is done by:
+
+```python
+
+from sklearn.preprocessing import PolynomialFeatures
+
+poly = PolynomialFeatures(degree=4)
+x_poly = poly.fit_transform(x)
+
+```
+
+- `PolynomialFeatures(degree=4)`: This specifies that we want to create polynomial features up to the 4th degree.
+- `x_poly = poly.fit_transform(x)`: This transforms the original feature `x` into polynomial features. For example, if `x` is a single feature, `x_poly` will include x, x2, x3, and x4.
+    
+    xx
+    
+    x2x^2
+    
+    x3x^3
+    
+    x4x^4
+    
+
+### 2. Fitting the Polynomial Regression Model
+
+After transforming the features, we fit a linear regression model to these polynomial features:
+
+```python
+
+lin_reg2 = LinearRegression()
+lin_reg2.fit(x_poly, y)
+
+```
+
+- `lin_reg2 = LinearRegression()`: This creates an instance of the `LinearRegression` class.
+- `lin_reg2.fit(x_poly, y)`: This fits the linear regression model to the transformed polynomial features (`x_poly`) and the target variable (`y`). Essentially, we are still using linear regression, but the input features are now polynomially transformed, allowing us to model a polynomial relationship.
