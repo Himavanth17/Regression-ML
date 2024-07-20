@@ -1,0 +1,50 @@
+### Import SVR and Initialize the Model
+
+```python
+
+from sklearn.svm import SVR
+
+regressor = SVR(kernel='rbf')
+
+```
+
+- Purpose:
+    - `from sklearn.svm import SVR` imports the Support Vector Regression (SVR) model from scikit-learn (`sklearn`).
+    - `regressor = SVR(kernel='rbf')` initializes an SVR model with a radial basis function kernel (`kernel='rbf'`). The radial basis function kernel is suitable for capturing nonlinear relationships between the features (`x`) and the target (`y`).
+
+### 2. Fit the SVR Model
+
+```python
+
+regressor.fit(x, y)
+
+```
+
+- Purpose:
+    - `regressor.fit(x, y)` fits the SVR model to the data.
+    - `x` represents the features (independent variables) of your dataset.
+    - `y` represents the target variable (dependent variable) that the model aims to predict.
+    - This step trains the SVR model to learn the relationship between `x` and `y`.
+
+### 3. Inverse Transform and Plotting
+
+```python
+
+plt.scatter(sc_x.inverse_transform(x), sc_y.inverse_transform(y))
+plt.plot(sc_x.inverse_transform(x), sc_y.inverse_transform(regressor.predict(x).reshape(-1, 1)))
+
+```
+
+- Purpose:
+    - `sc_x.inverse_transform(x)` and `sc_y.inverse_transform(y)` are used to inverse transform the scaled `x` and `y` data back to their original scales. This is necessary for plotting the original data points.
+    - `plt.scatter` is used to create a scatter plot of the original data points (`x`, `y`) after inverse transformation, where `x` is transformed back using `sc_x.inverse_transform(x)` and `y` is transformed back using `sc_y.inverse_transform(y)`.
+    - `regressor.predict(x)` predicts the target values (`y`) based on the features (`x`) using the SVR model.
+    - `sc_y.inverse_transform(regressor.predict(x).reshape(-1, 1))` inverse transforms the predicted values back to their original scale.
+    - `plt.plot` is used to plot the predicted values as a line plot over the original data points, showing how well the SVR model fits the data.
+
+### Explanation in Context
+
+- Data Scaling: Before fitting the SVR model (`regressor.fit(x, y)`), the independent variables (`x`) and dependent variable (`y`) are scaled using `StandardScaler`. This standardization ensures that all variables have a mean of 0 and a standard deviation of 1, which can improve the performance of the SVR model.
+- Model Fitting: Once scaled, the SVR model is trained (`fit`) on the scaled data (`x`, `y`). The SVR model learns the patterns and relationships in the data.
+- Inverse Transformation: After fitting the model, the `inverse_transform` method is used to convert the scaled data back to its original scale. This step is crucial for visualization purposes because we want to plot the original data points (`x`, `y`) and the predictions (`regressor.predict(x)`) in their original units.
+- Visualization: Finally, `plt.scatter` and `plt.plot` functions are used to create a scatter plot of the original data points (`x`, `y`) and overlay a line plot of the SVR model's predictions (`regressor.predict(x)`). This allows us to visually assess how well the SVR model fits the data.
